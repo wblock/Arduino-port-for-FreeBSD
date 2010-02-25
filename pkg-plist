@@ -419,6 +419,7 @@ arduino/readme.txt
 %%REFDOCS%%arduino/reference/WordCast.html
 %%REFDOCS%%arduino/reference/arduino.css
 %%REFDOCS%%arduino/reference/environment.html
+%%REFDOCS%%arduino/reference/faq.html
 %%REFDOCS%%arduino/reference/index.html
 arduino/tools/Mangler/make.sh
 arduino/tools/Mangler/src/Mangler.java
