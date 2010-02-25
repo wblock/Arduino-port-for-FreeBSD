@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# build the pkg-plist
+
+# BUGS
+# must be run with NOPORTDOCS and NOPORTEXAMPLES undefined
+
+tmpdir="/var/tmp/usrlocal"
+mkopts="PREFIX=$tmpdir"
+make clean
+
+mkdir $tmpdir
+mtree -U -f /usr/ports/Templates/BSD.local.dist -d -e -p $tmpdir
+make depends $mkopts
+
+(cd $tmpdir && find -d * -type d) | sort > OLD-DIRS
+
+:>pkg-plist
+
+make install $mkopts
+
+(cd $tmpdir && find -d * \! -type d) | sort > plist.raw
+(cd $tmpdir && find -d * -type d) | sort | comm -13 OLD-DIRS - | sort -r | sed -e 's#^#@dirrm #' >> plist.raw
+
+# prefix lines with identifiers to use with PLIST_SUB
+perl -ne 'print "%%EXAMPLES%%" if /\/examples/; \
+	  print "%%REFDOCS%%" if /\/reference/;
+	  print unless /share\/applications/;' plist.raw > pkg-plist
+rm plist.raw
+
+make PREFIX=$tmpdir deinstall
+rm -rf $tmpdir
+rm OLD-DIRS
