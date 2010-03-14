@@ -62,6 +62,7 @@ post-extract:
 	@${LN} -s ${WRKSRC}/reference/FAQ.html ${WRKSRC}/reference/faq.html
 
 post-patch:
+	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.orig
 .if defined(WITHOUT_REFDOCS)
 	@${RM} -rf ${WRKSRC}/reference
 .endif
