@@ -61,8 +61,10 @@ post-extract:
 # named FAQ.html.  Will be fixed after arduino-0018
 	@${LN} -s ${WRKSRC}/reference/FAQ.html ${WRKSRC}/reference/faq.html
 
+	@${REINPLACE_CMD} 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
+	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.bak
+
 post-patch:
-	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.orig
 .if defined(WITHOUT_REFDOCS)
 	@${RM} -rf ${WRKSRC}/reference
 .endif
