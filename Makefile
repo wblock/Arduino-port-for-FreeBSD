@@ -55,8 +55,13 @@ post-extract:
 	@${MKDIR} ${WRKSRC}/hardware/tools/avr
 	@${LN} -s ${PREFIX}/bin ${WRKSRC}/hardware/tools/avr/bin
 	@${LN} -s ${PREFIX}/etc ${WRKSRC}/hardware/tools/avr/etc
+
+	@${RM} ${WRKSRC}/lib/RXTXcomm.jar
+	@${LN} -s ${JAVA_HOME}/lib/ext/RXTXcomm.jar ${WRKSRC}/lib/RXTXcomm.jar
+
 	@${RM} ${WRKSRC}/lib/librxtxSerial.so
 	@${LN} -s ${JAVA_HOME}/lib/${ARCH}/librxtxSerial.so ${WRKSRC}/lib/
+
 # Bug workaround: pde.jar refers to faq.html, but the file is
 # named FAQ.html.  Will be fixed after arduino-0018
 	@${LN} -s ${WRKSRC}/reference/FAQ.html ${WRKSRC}/reference/faq.html
