@@ -1,10 +1,10 @@
 # New ports collection makefile for:	arduino
 # Date created:				10 Feb 2010
 # Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD$
+# $FreeBSD: ports/devel/arduino/Makefile,v 1.2 2010/10/01 22:59:36 skreuzer Exp $
 
 PORTNAME=	arduino
-PORTVERSION=	0021
+PORTVERSION=	0022
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
