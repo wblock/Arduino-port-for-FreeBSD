@@ -10,11 +10,11 @@ when the IDE is not running.
 Setting the launcher for help files:
     launcher=firefox
 
-Showing what the IDE is doing for build and upload commands (only 
+Showing what the IDE is doing for build and upload commands (only
 visible if you started the IDE from a console):
     build.verbose=true
     upload.verbose=true
-    
+
 To start the IDE:
     %%PREFIX%%/bin/arduino
 
