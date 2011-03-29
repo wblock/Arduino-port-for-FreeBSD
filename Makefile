@@ -1,10 +1,11 @@
 # New ports collection makefile for:	arduino
 # Date created:				10 Feb 2010
 # Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD: ports/devel/arduino/Makefile,v 1.2 2010/10/01 22:59:36 skreuzer Exp $
+# $FreeBSD: ports/devel/arduino/Makefile,v 1.5 2011/03/27 10:12:55 miwi Exp $
 
 PORTNAME=	arduino
 PORTVERSION=	0022
+PORTREVISION=	1
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
@@ -22,7 +23,9 @@ NO_BUILD=	yes
 SUB_FILES=	arduino pkg-message
 SUB_LIST=	PORTNAME=${PORTNAME}
 
-DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" "computer" "arduino" "Development;IDE;" "true"
+DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" \
+			${PREFIX}/${PORTNAME}/reference/img/logo.png \
+			"arduino" "Development;IDE;" "true"
 
 .if !defined(NOPORTDOCS)
 OPTIONS+=	REFDOCS "Install the reference documents" on
@@ -66,6 +69,9 @@ post-extract:
 	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.bak
 
 post-patch:
+	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/*.orig
+	@${RM} ${WRKSRC}/hardware/arduino/cores/arduino/*.orig
+
 .if defined(WITHOUT_REFDOCS)
 	@${RM} -rf ${WRKSRC}/reference
 .endif
