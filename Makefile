@@ -25,7 +25,7 @@ SUB_LIST=	PORTNAME=${PORTNAME}
 
 DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" \
 			${PREFIX}/${PORTNAME}/reference/img/logo.png \
-			"arduino" "Development;IDE;" "true"
+			"arduino" "Development;IDE;" false
 
 .if !defined(NOPORTDOCS)
 OPTIONS+=	REFDOCS "Install the reference documents" on
