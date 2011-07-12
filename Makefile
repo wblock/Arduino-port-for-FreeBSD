@@ -5,7 +5,7 @@
 
 PORTNAME=	arduino
 PORTVERSION=	0022
-PORTREVISION=	1
+PORTREVISION=	2
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
@@ -67,7 +67,7 @@ post-extract:
 
 	@${REINPLACE_CMD} -i "" -e 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
 	
-	@${REINPLACE_CMD} -i "" -e 's|readlink -f|realpath|' ${WRKSRC}/arduino
+	@${REINPLACE_CMD} -i "" -e 's|readlink -f|realpath|g' ${WRKSRC}/arduino
 
 post-patch:
 	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/*.orig
