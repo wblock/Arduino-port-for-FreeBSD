@@ -25,7 +25,7 @@ SUB_LIST=	PORTNAME=${PORTNAME}
 
 DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" \
 			${PREFIX}/${PORTNAME}/reference/img/logo.png \
-			"arduino" "Development;IDE;" false
+			"arduino" "Development;IDE;" "false"
 
 .if !defined(NOPORTDOCS)
 OPTIONS+=	REFDOCS "Install the reference documents" on
@@ -66,7 +66,7 @@ post-extract:
 	@${LN} -s ${JAVA_HOME}/lib/${ARCH}/librxtxSerial.so ${WRKSRC}/lib/
 
 	@${REINPLACE_CMD} -i "" -e 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
-	
+
 	@${REINPLACE_CMD} -i "" -e 's|readlink -f|realpath|g' ${WRKSRC}/arduino
 
 post-patch:
