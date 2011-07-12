@@ -65,8 +65,7 @@ post-extract:
 	@${RM} ${WRKSRC}/lib/librxtxSerial.so
 	@${LN} -s ${JAVA_HOME}/lib/${ARCH}/librxtxSerial.so ${WRKSRC}/lib/
 
-	@${REINPLACE_CMD} 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
-	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.bak
+	@${REINPLACE_CMD} -i "" 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
 
 post-patch:
 	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/*.orig
