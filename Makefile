@@ -3,9 +3,8 @@
 # Whom:					Warren Block <wblock@wonkity.com>
 # $FreeBSD: ports/devel/arduino/Makefile,v 1.5 2011/03/27 10:12:55 miwi Exp $
 
-PORTNAME=	arduino
-PORTVERSION=	0022
-PORTREVISION=	2
+PORTNAME=	arduino-1.0
+PORTVERSION=	rc1
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
