@@ -66,8 +66,6 @@ post-extract:
 	@${RM} ${WRKSRC}/lib/librxtxSerial.so
 	@${LN} -s ${JAVA_HOME}/lib/${ARCH}/librxtxSerial.so ${WRKSRC}/lib/
 
-	@${REINPLACE_CMD} -e 's|stk500|arduino|g' ${WRKSRC}/hardware/arduino/boards.txt
-
 	@${REINPLACE_CMD} -e 's|readlink -f|realpath|g' ${WRKSRC}/arduino
 
 post-patch:
