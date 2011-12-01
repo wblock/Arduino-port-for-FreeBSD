@@ -9,7 +9,7 @@ CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
 
-MAINTAINER=	wblock@wonkity.com
+MAINTAINER=	wblock@freebsd.org
 COMMENT=	Open-source electronics prototyping platform
 
 RUN_DEPENDS=	${JAVA_HOME}/jre/lib/ext/RXTXcomm.jar:${PORTSDIR}/comms/rxtx \
