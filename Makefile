@@ -3,8 +3,10 @@
 # Whom:					Warren Block <wblock@wonkity.com>
 # $FreeBSD: ports/devel/arduino/Makefile,v 1.5 2011/03/27 10:12:55 miwi Exp $
 
-PORTNAME=	arduino-1.0
-PORTVERSION=	rc1
+PORTNAME=	arduino
+PORTVERSION=	1.0
+PORTEPOCH=	1
+DISTFILES=	${PORTNAME}-${PORTVERSION}-linux.tgz
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
 EXTRACT_SUFX=	.tgz
@@ -55,6 +57,7 @@ PLIST_SUB+=	EXAMPLES=""
 
 post-extract:
 	@${RM} ${WRKSRC}/hardware/tools/avrdude
+	@${RM} ${WRKSRC}/hardware/tools/avrdude64
 	@${RM} ${WRKSRC}/hardware/tools/avrdude.conf
 	@${MKDIR} ${WRKSRC}/hardware/tools/avr
 	@${LN} -s ${PREFIX}/bin ${WRKSRC}/hardware/tools/avr/bin
@@ -70,7 +73,6 @@ post-extract:
 
 post-patch:
 	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/*.orig
-	@${RM} ${WRKSRC}/hardware/arduino/cores/arduino/*.orig
 
 .if defined(WITHOUT_REFDOCS)
 	@${RM} -rf ${WRKSRC}/reference
