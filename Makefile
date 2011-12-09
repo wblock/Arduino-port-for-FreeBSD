@@ -5,9 +5,10 @@
 
 PORTNAME=	arduino
 PORTVERSION=	1.0
-DISTFILES=	${PORTNAME}-${PORTVERSION}-linux.tgz
+PORTEPOCH=	1
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
+DISTNAME=	${PORTNAME}-${PORTVERSION}-linux
 EXTRACT_SUFX=	.tgz
 
 MAINTAINER=	wblock@freebsd.org
@@ -16,6 +17,8 @@ COMMENT=	Open-source electronics prototyping platform
 RUN_DEPENDS=	${JAVA_HOME}/jre/lib/ext/RXTXcomm.jar:${PORTSDIR}/comms/rxtx \
 		${LOCALBASE}/bin/avrdude:${PORTSDIR}/devel/avrdude \
 		${LOCALBASE}/avr/include/avr/io.h:${PORTSDIR}/devel/avr-libc
+
+WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
 
 USE_JAVA=	1.6+
 NO_BUILD=	yes
