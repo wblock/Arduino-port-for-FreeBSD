@@ -1,7 +1,7 @@
 # New ports collection makefile for:	arduino
 # Date created:				10 Feb 2010
 # Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD: ports/devel/arduino/Makefile,v 1.5 2011/03/27 10:12:55 miwi Exp $
+# $FreeBSD: ports/devel/arduino/Makefile,v 1.7 2011/08/04 00:54:51 rea Exp $
 
 PORTNAME=	arduino
 PORTVERSION=	1.0
