@@ -1,7 +1,7 @@
 # New ports collection makefile for:	arduino
 # Date created:				10 Feb 2010
 # Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD: ports/devel/arduino/Makefile,v 1.7 2011/08/04 00:54:51 rea Exp $
+# $FreeBSD: ports/devel/arduino/Makefile,v 1.8 2011/12/14 03:43:10 zi Exp $
 
 PORTNAME=	arduino
 PORTVERSION=	1.0
@@ -61,6 +61,7 @@ post-extract:
 	@${RM} ${WRKSRC}/hardware/tools/avrdude
 	@${RM} ${WRKSRC}/hardware/tools/avrdude64
 	@${RM} ${WRKSRC}/hardware/tools/avrdude.conf
+	@${RM} ${WRKSRC}/lib/librxtxSerial64.so
 	@${MKDIR} ${WRKSRC}/hardware/tools/avr
 	@${LN} -s ${PREFIX}/bin ${WRKSRC}/hardware/tools/avr/bin
 	@${LN} -s ${PREFIX}/etc ${WRKSRC}/hardware/tools/avr/etc
