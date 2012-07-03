@@ -25,7 +25,7 @@ make install $mkopts
 # prefix lines with identifiers to use with PLIST_SUB
 perl -ne 'print "%%EXAMPLES%%" if /\/examples/; \
 	  print "%%REFDOCS%%" if /\/reference/;
-	  print unless /share\/applications/;' plist.raw > pkg-plist
+	  print unless /share\/applications|libdata\/ldconfig\/arduino/;' plist.raw > pkg-plist
 rm plist.raw
 
 make PREFIX=$tmpdir deinstall

@@ -1,11 +1,10 @@
 # New ports collection makefile for:	arduino
 # Date created:				10 Feb 2010
 # Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD: ports/devel/arduino/Makefile,v 1.8 2011/12/14 03:43:10 zi Exp $
+# $FreeBSD: ports/devel/arduino/Makefile,v 1.10 2012/04/17 18:32:12 scheidell Exp $
 
 PORTNAME=	arduino
-PORTVERSION=	1.0
-PORTREVISION=	1
+PORTVERSION=	1.0.1
 PORTEPOCH=	1
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
@@ -23,6 +22,7 @@ WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
 
 USE_JAVA=	1.6+
 NO_BUILD=	yes
+USE_LDCONFIG=	${PREFIX}/arduino/lib
 
 SUB_FILES=	arduino pkg-message
 SUB_LIST=	PORTNAME=${PORTNAME}
@@ -33,55 +33,37 @@ DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" \
 			${PREFIX}/${PORTNAME}/reference/img/logo.png \
 			"arduino" "Development;IDE;" "false"
 
-.if !defined(NOPORTDOCS)
-OPTIONS+=	REFDOCS "Install the reference documents" on
-.endif
-.if !defined(NOPORTEXAMPLES)
-OPTIONS+=	EXAMPLES "Install the example code" on
-.endif
+OPTIONS_DEFINE+=	DOCS EXAMPLES
+DOCS_DESC=	 	Install the reference documents
 
 .include <bsd.port.options.mk>
 
-.if defined(WITHOUT_REFDOCS) || defined(NOPORTDOCS)
-WITHOUT_REFDOCS=	true
-.undef WITH_REFDOCS
+.if empty(PORT_OPTIONS:MDOCS)
 PLIST_SUB+=	REFDOCS="@comment "
 .else
 PLIST_SUB+=	REFDOCS=""
 .endif
 
-.if defined(WITHOUT_EXAMPLES) || defined(NOPORTEXAMPLES)
-WITHOUT_EXAMPLES=	true
-.undef WITH_EXAMPLES
+.if empty(PORT_OPTIONS:MEXAMPLES)
 PLIST_SUB+=	EXAMPLES="@comment "
 .else
 PLIST_SUB+=	EXAMPLES=""
 .endif
 
-post-extract:
-	@${RM} ${WRKSRC}/hardware/tools/avrdude
-	@${RM} ${WRKSRC}/hardware/tools/avrdude64
-	@${RM} ${WRKSRC}/hardware/tools/avrdude.conf
-	@${RM} ${WRKSRC}/lib/librxtxSerial64.so
-	@${MKDIR} ${WRKSRC}/hardware/tools/avr
+post-patch:
+	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c.orig
+	@${RM} -rf ${WRKSRC}/hardware/tools/
+	@${MKDIR} ${WRKSRC}/hardware/tools/avr/
 	@${LN} -s ${PREFIX}/bin ${WRKSRC}/hardware/tools/avr/bin
 	@${LN} -s ${PREFIX}/etc ${WRKSRC}/hardware/tools/avr/etc
 
 	@${RM} ${WRKSRC}/lib/RXTXcomm.jar
 	@${LN} -s ${JAVA_HOME}/lib/ext/RXTXcomm.jar ${WRKSRC}/lib/RXTXcomm.jar
 
-	@${RM} ${WRKSRC}/lib/librxtxSerial.so
-	@${LN} -s ${JAVA_HOME}/lib/${ARCH}/librxtxSerial.so ${WRKSRC}/lib/
-
-	@${REINPLACE_CMD} -e 's|readlink -f|realpath|g' ${WRKSRC}/arduino
-
-post-patch:
-	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/*.orig
-
-.if defined(WITHOUT_REFDOCS)
+.if empty(PORT_OPTIONS:MDOCS)
 	@${RM} -rf ${WRKSRC}/reference
 .endif
-.if defined(WITHOUT_EXAMPLES)
+.if empty(PORT_OPTIONS:MEXAMPLES)
 	@${RM} -rf ${WRKSRC}/examples
 	@${RM} -rf ${WRKSRC}/libraries/*/examples
 .endif
