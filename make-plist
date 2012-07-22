@@ -3,7 +3,7 @@
 # build the pkg-plist
 
 # BUGS
-# must be run with NOPORTDOCS and NOPORTEXAMPLES undefined
+echo "must be run with DOCS and EXAMPLES options enabled"
 
 tmpdir="/var/tmp/usrlocal"
 mkopts="PREFIX=$tmpdir"
@@ -31,3 +31,4 @@ rm plist.raw
 make PREFIX=$tmpdir deinstall
 rm -rf $tmpdir
 rm OLD-DIRS
+echo "must be run with DOCS and EXAMPLES options enabled"
