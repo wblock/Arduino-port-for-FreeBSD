@@ -721,7 +721,6 @@ bin/arduino
 @dirrm arduino/hardware/arduino/variants
 @dirrm arduino/hardware/arduino/firmwares/arduino-usbserial/Lib
 @dirrm arduino/hardware/arduino/firmwares/arduino-usbserial/Board
-@dirrm arduino/hardware/arduino/firmwares/arduino-usbserial/.dep
 @dirrm arduino/hardware/arduino/firmwares/arduino-usbserial
 @dirrm arduino/hardware/arduino/firmwares/arduino-usbdfu/Board
 @dirrm arduino/hardware/arduino/firmwares/arduino-usbdfu

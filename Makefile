@@ -1,11 +1,8 @@
-# New ports collection makefile for:	arduino
-# Date created:				10 Feb 2010
-# Whom:					Warren Block <wblock@wonkity.com>
-# $FreeBSD: ports/devel/arduino/Makefile,v 1.11 2012/07/12 18:50:36 wxs Exp $
+# $FreeBSD: head/devel/arduino/Makefile 301609 2012-07-27 12:58:30Z scheidell $
 
 PORTNAME=	arduino
 PORTVERSION=	1.0.1
-PORTREVISION=	1
+PORTREVISION=	2
 PORTEPOCH=	1
 CATEGORIES=	devel java lang
 MASTER_SITES=	GOOGLE_CODE
@@ -20,6 +17,7 @@ RUN_DEPENDS=	${JAVA_HOME}/jre/lib/ext/RXTXcomm.jar:${PORTSDIR}/comms/rxtx \
 		${LOCALBASE}/avr/include/avr/io.h:${PORTSDIR}/devel/avr-libc
 
 WRKSRC=		${WRKDIR}/${PORTNAME}-${PORTVERSION}
+USE_DOS2UNIX=	yes
 
 USE_JAVA=	1.6+
 NO_BUILD=	yes
@@ -34,26 +32,42 @@ DESKTOP_ENTRIES=	"Arduino" "Arduino IDE" \
 			${PREFIX}/${PORTNAME}/logo.png \
 			"arduino" "Development;IDE;" "false"
 
-OPTIONS_DEFINE+=	DOCS EXAMPLES
+OPTIONS_DEFINE+=	ATMEGA644 DOCS EXAMPLES
+ATMEGA644_DESC=	 	Patch boards.txt adding ATmega644 values
 DOCS_DESC=	 	Install the reference documents
 
+INSLIST=	arduino hardware lib libraries logo.png revisions.txt tools
+
 .include <bsd.port.options.mk>
+
+.if ${PORT_OPTIONS:MATMEGA644}
+EXTRA_PATCHES+=	${FILESDIR}/extrapatch-hardware-arduino-boards.txt
+.endif
 
 .if empty(PORT_OPTIONS:MDOCS)
 PLIST_SUB+=	REFDOCS="@comment "
 .else
 PLIST_SUB+=	REFDOCS=""
+INSLIST+=	reference
 .endif
 
 .if empty(PORT_OPTIONS:MEXAMPLES)
 PLIST_SUB+=	EXAMPLES="@comment "
+FIND_EXCLUDE=	"! -path */examples ! -path */examples/* -prune"
 .else
 PLIST_SUB+=	EXAMPLES=""
+FIND_EXCLUDE=
+INSLIST+=	examples
 .endif
 
 post-patch:
 	@${RM} ${WRKSRC}/hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c.orig
+	@${RM} ${WRKSRC}/hardware/arduino/cores/arduino/HardwareSerial.cpp.orig
+.if ${PORT_OPTIONS:MATMEGA644}
+	@${RM} ${WRKSRC}/hardware/arduino/boards.txt.orig
+.endif
 	@${RM} -rf ${WRKSRC}/hardware/tools/
+	@${RMDIR} ${WRKSRC}/hardware/arduino/firmwares/arduino-usbserial/.dep
 	@${MKDIR} ${WRKSRC}/hardware/tools/avr/
 	@${LN} -s ${PREFIX}/bin ${WRKSRC}/hardware/tools/avr/bin
 	@${LN} -s ${PREFIX}/etc ${WRKSRC}/hardware/tools/avr/etc
@@ -64,17 +78,9 @@ post-patch:
 	@${MV} ${WRKSRC}/reference/img/logo.png ${WRKSRC}/
 	@${RM} -rf ${WRKSRC}/reference/img/
 
-.if empty(PORT_OPTIONS:MDOCS)
-	@${RM} -rf ${WRKSRC}/reference
-.endif
-.if empty(PORT_OPTIONS:MEXAMPLES)
-	@${RM} -rf ${WRKSRC}/examples
-	@${RM} -rf ${WRKSRC}/libraries/*/examples
-.endif
-
 do-install:
 	@${MKDIR} ${PREFIX}/${PORTNAME}
-	@${CP} -Rp ${WRKSRC}/* ${PREFIX}/${PORTNAME}
+	@(cd ${WRKSRC}/ && ${COPYTREE_SHARE} "${INSLIST}" ${PREFIX}/${PORTNAME} ${FIND_EXCLUDE})
 	@${INSTALL_SCRIPT} ${WRKDIR}/arduino ${PREFIX}/bin/
 
 post-install:

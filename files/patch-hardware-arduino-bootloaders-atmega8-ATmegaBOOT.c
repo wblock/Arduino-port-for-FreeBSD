@@ -1,5 +1,5 @@
---- hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c.orig	2010-09-20 08:54:44.000000000 -0700
-+++ hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c	2011-02-16 10:49:29.000000000 -0800
+--- hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c.orig	2011-03-21 15:17:03.000000000 +0800
++++ hardware/arduino/bootloaders/atmega8/ATmegaBOOT.c	2011-03-21 15:17:23.000000000 +0800
 @@ -36,7 +36,7 @@
  #include <avr/pgmspace.h>
  #include <avr/eeprom.h>
